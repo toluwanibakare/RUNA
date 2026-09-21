@@ -8,6 +8,7 @@ export type Pack = {
   storeName: string;
   items: CartItem[];
   deliveryFee: number;
+  rundaPack: boolean; // optional ₦200 seal per pack
 };
 
 type CartContextType = {
@@ -17,6 +18,7 @@ type CartContextType = {
   count: number;
   subtotal: number;
   deliveryFee: number;
+  rundaFee: number;
   total: number;
   add: (product: Product) => void;
   addToPack: (product: Product, packId: string) => void;
@@ -26,6 +28,7 @@ type CartContextType = {
   dec: (id: string) => void;
   clear: () => void;
   clearPack: (packId: string) => void;
+  toggleRunda: (packId: string) => void;
 };
 
 const CartContext = createContext<CartContextType | null>(null);
@@ -59,6 +62,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           storeName: product.storeName,
           items: [{ product, quantity: 1 }],
           deliveryFee: feeForStore(product.storeId),
+          rundaPack: false,
         },
       ];
     });
@@ -76,7 +80,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const createPack = (storeId: string, storeName: string) =>
     setPacks((prev) => [
       ...prev,
-      { id: `pack-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`, storeId, storeName, items: [], deliveryFee: feeForStore(storeId) },
+      { id: `pack-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`, storeId, storeName, items: [], deliveryFee: feeForStore(storeId), rundaPack: false },
     ]);
 
   const remove = (id: string) => setPacks((prev) => prev.map((p) => ({ ...p, items: p.items.filter((i) => i.product.id !== id) })).filter((p) => p.items.length > 0));
@@ -89,14 +93,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
   const clear = () => setPacks([]);
   const clearPack = (packId: string) => setPacks((prev) => prev.filter((p) => p.id !== packId));
+  const toggleRunda = (packId: string) => setPacks((prev) => prev.map((p) => (p.id === packId ? { ...p, rundaPack: !p.rundaPack } : p)));
 
   const items = useMemo(() => packs.flatMap((p) => p.items), [packs]);
   const subtotal = useMemo(() => packs.reduce((s, p) => s + p.items.reduce((a, i) => a + i.product.price * i.quantity, 0), 0), [packs]);
-  const deliveryFee = useMemo(() => packs.reduce((s, p) => s + (p.items.length ? p.deliveryFee : 0), 0), [packs]);
-  const total = subtotal + deliveryFee;
+  // delivery fee per distinct store - same store packs checkout together
+  const deliveryFee = useMemo(() => {
+    const distinctStores = new Set(packs.filter((p) => p.items.length > 0).map((p) => p.storeId));
+    return distinctStores.size * 300;
+  }, [packs]);
+  const rundaFee = useMemo(() => packs.filter((p) => p.rundaPack && p.items.length > 0).length * 200, [packs]);
+  const total = subtotal + deliveryFee + rundaFee;
   const count = useMemo(() => packs.reduce((s, p) => s + p.items.reduce((a, i) => a + i.quantity, 0), 0), [packs]);
 
-  return <CartContext.Provider value={{ packs, items, count, subtotal, deliveryFee, total, add, addToPack, createPack, remove, inc, dec, clear, clearPack }}>{children}</CartContext.Provider>;
+  return <CartContext.Provider value={{ packs, items, count, subtotal, deliveryFee, rundaFee, total, add, addToPack, createPack, remove, inc, dec, clear, clearPack, toggleRunda }}>{children}</CartContext.Provider>;
 }
 
 export function useCart() {

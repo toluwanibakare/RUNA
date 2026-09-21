@@ -1,6 +1,6 @@
 "use client";
 import { BackButton } from "@/components/ui/BackButton";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { stores, products } from "@/data/mock";
 import { ProductCard } from "@/components/ui/Cards";
 import { Button } from "@/components/ui/Button";
@@ -12,10 +12,21 @@ import { cn } from "@/lib/utils";
 
 export default function StorePage() {
   const { id } = useParams<{ id: string }>();
+  const searchParams = useSearchParams();
+  const packId = searchParams.get("packId");
   const store = stores.find((s) => s.id === id) ?? stores[0];
   const menu = products.filter((p) => p.storeId === store.id || true).slice(0, 6);
-  const { add, count } = useCart();
+  const { add, addToPack } = useCart();
   const [tab, setTab] = useState("Popular");
+  const handleAdd = (p: (typeof products)[0]) => {
+    if (packId) {
+      addToPack(p, packId);
+      toast.success(`${p.name} added to pack`);
+    } else {
+      add(p);
+      toast.success(`${p.name} added`);
+    }
+  };
   return (
     <div className="space-y-4 -mx-4">
       <div className="relative h-36 sm:h-40 md:h-44 bg-[#F9FAFB] overflow-hidden">
@@ -41,9 +52,10 @@ export default function StorePage() {
         ))}
       </div>
 
+      {packId && <p className="px-4 text-xs font-semibold text-[#1EB95E]">Adding to Pack {packId.slice(-4)} - {store.name}</p>}
       <div className="px-4 grid grid-cols-2 gap-3 pb-20">
         {menu.map((p) => (
-          <ProductCard key={p.id} product={p} onAdd={() => add(p)} />
+          <ProductCard key={p.id} product={p} onAdd={() => handleAdd(p)} />
         ))}
       </div>
     </div>
