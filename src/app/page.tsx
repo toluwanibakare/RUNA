@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { ProductCard, StoreCard } from "@/components/ui/Cards";
 import { PromoModal } from "@/components/ui/PromoModal";
+import { PromoCarousel } from "@/components/ui/PromoCarousel";
 import { categories, stores, products } from "@/data/mock";
 import { useCart } from "@/hooks/useCart";
 import { toast } from "sonner";
@@ -87,17 +88,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Promo */}
-      <div className="rounded-3xl bg-[#0C231D] text-white p-5 sm:p-6 flex gap-3 sm:gap-4 overflow-hidden relative items-center">
-        <div className="flex-1 space-y-2 relative z-10 min-w-0">
-          <h3 className="text-lg sm:text-xl font-bold leading-tight">Hungry?</h3>
-          <p className="text-sm text-white/80 leading-relaxed line-clamp-2">Get your favourite meal delivered around campus.</p>
-          <Link href="/explore" className="inline-flex items-center gap-2 bg-white text-[#0C231D] text-sm font-semibold px-4 py-2 rounded-full mt-2 active:scale-95 transition">
-            Order now <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=400&fit=crop" alt="food" loading="lazy" className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-2xl object-cover shrink-0 max-w-[38%] aspect-square" />
-      </div>
+      {/* Promo Carousel */}
+      <PromoCarousel />
 
       {/* Flash Sales */}
       <section className="space-y-3">
