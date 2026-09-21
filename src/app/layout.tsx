@@ -40,15 +40,23 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white text-[#0C231D]">
+    <html lang="en" className={`${inter.variable} h-full antialiased`} suppressHydrationWarning>
+      <body className="min-h-full flex flex-col bg-white text-[#0C231D]" suppressHydrationWarning>
         <CartProvider>
           <Header />
           <main className="flex-1 mx-auto w-full max-w-[720px] px-4 pb-28 pt-4">{children}</main>
           <StickyCartBar />
           <BottomNav />
         </CartProvider>
-        <Toaster position="top-center" richColors closeButton toastOptions={{ style: { borderRadius: "12px", fontFamily: "var(--font-inter)" } }} />
+        <Toaster
+          position="bottom-center"
+          richColors
+          closeButton
+          expand={false}
+          offset={{ bottom: "96px", top: "16px", left: "16px", right: "16px" }}
+          mobileOffset={{ bottom: "96px", top: "16px", left: "16px", right: "16px" }}
+          toastOptions={{ style: { borderRadius: "12px", fontFamily: "var(--font-inter)" } }}
+        />
       </body>
     </html>
   );

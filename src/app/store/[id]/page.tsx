@@ -18,11 +18,11 @@ export default function StorePage() {
   const [tab, setTab] = useState("Popular");
   return (
     <div className="space-y-4 -mx-4">
-      <div className="relative h-40 bg-[#F9FAFB] overflow-hidden">
-        <img src={store.cover} alt={store.name} className="w-full h-full object-cover" />
+      <div className="relative h-36 sm:h-40 md:h-44 bg-[#F9FAFB] overflow-hidden">
+        <img src={store.cover} alt={store.name} loading="lazy" className="w-full h-full object-cover max-w-full" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
         <div className="absolute bottom-3 left-4 right-4 flex items-end gap-3">
-          <img src={store.logo} alt={store.name} className="w-14 h-14 rounded-xl border-2 border-white object-cover bg-white" />
+          <img src={store.logo} alt={store.name} loading="lazy" className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl border-2 border-white object-cover bg-white shrink-0 max-w-full" />
           <div className="text-white flex-1 min-w-0">
             <h1 className="font-bold leading-tight truncate">{store.name}</h1>
             <p className="text-xs text-white/80 flex items-center gap-1.5">
@@ -43,7 +43,7 @@ export default function StorePage() {
 
       <div className="px-4 grid grid-cols-2 gap-3 pb-20">
         {menu.map((p) => (
-          <ProductCard key={p.id} product={p} onAdd={() => { add(p); toast.success(`${p.name} added`); }} />
+          <ProductCard key={p.id} product={p} onAdd={() => add(p)} />
         ))}
       </div>
     </div>

@@ -16,8 +16,8 @@ export default function ProductPage() {
   const [qty, setQty] = useState(1);
   return (
     <div className="space-y-5 -mx-4">
-      <div className="aspect-[4/3] bg-[#F9FAFB] overflow-hidden">
-        <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+      <div className="aspect-[4/3] sm:aspect-[16/10] bg-[#F9FAFB] overflow-hidden max-w-full">
+        <img src={product.image} alt={product.name} loading="lazy" className="w-full h-full object-cover max-w-full" />
       </div>
       <div className="px-4 space-y-4">
         <div>
@@ -38,7 +38,6 @@ export default function ProductPage() {
           className="w-full"
           onClick={() => {
             for (let i = 0; i < qty; i++) add(product);
-            toast.success(`${product.name} ×${qty} added to cart`);
           }}
         >
           Add to cart • {formatPrice(product.price * qty)}

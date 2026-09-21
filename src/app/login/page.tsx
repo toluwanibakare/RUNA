@@ -19,7 +19,6 @@ export default function LoginPage() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      toast.success("Welcome back, Tolu - demo login successful");
       router.push("/");
     }, 700);
   };

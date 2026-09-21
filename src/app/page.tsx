@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { ProductCard, StoreCard } from "@/components/ui/Cards";
+import { PromoModal } from "@/components/ui/PromoModal";
 import { categories, stores, products } from "@/data/mock";
 import { useCart } from "@/hooks/useCart";
 import { toast } from "sonner";
@@ -15,6 +16,9 @@ export default function HomePage() {
   const isOnLocalNetwork = true; // mock: user is on Activities WiFi
   return (
     <div className="space-y-6">
+      {/* Chowdeck-style Promo Modal */}
+      <PromoModal />
+
       {/* Greeting */}
       <div className="space-y-1">
         <h1 className="text-2xl font-bold tracking-tight text-[#0C231D]">Good morning, Tolu 👋</h1>
@@ -84,15 +88,15 @@ export default function HomePage() {
       </section>
 
       {/* Promo */}
-      <div className="rounded-3xl bg-[#0C231D] text-white p-6 flex gap-4 overflow-hidden relative">
-        <div className="flex-1 space-y-2 relative z-10">
-          <h3 className="text-xl font-bold leading-tight">Hungry?</h3>
-          <p className="text-sm text-white/80 leading-relaxed">Get your favourite meal delivered around campus.</p>
+      <div className="rounded-3xl bg-[#0C231D] text-white p-5 sm:p-6 flex gap-3 sm:gap-4 overflow-hidden relative items-center">
+        <div className="flex-1 space-y-2 relative z-10 min-w-0">
+          <h3 className="text-lg sm:text-xl font-bold leading-tight">Hungry?</h3>
+          <p className="text-sm text-white/80 leading-relaxed line-clamp-2">Get your favourite meal delivered around campus.</p>
           <Link href="/explore" className="inline-flex items-center gap-2 bg-white text-[#0C231D] text-sm font-semibold px-4 py-2 rounded-full mt-2 active:scale-95 transition">
             Order now <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=260&fit=crop" alt="food" className="w-32 h-32 rounded-2xl object-cover shrink-0" />
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=400&fit=crop" alt="food" loading="lazy" className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-2xl object-cover shrink-0 max-w-[38%] aspect-square" />
       </div>
 
       {/* Flash Sales */}
@@ -116,9 +120,9 @@ export default function HomePage() {
         </div>
         <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 -mx-4 px-4">
           {products.slice(0, 3).map((p) => (
-            <div key={`flash-${p.id}`} className="min-w-[170px] shrink-0 relative">
-              <div className="absolute top-2 left-2 z-10 bg-red-500 text-white text-[11px] font-bold px-2 py-1 rounded-full">-20%</div>
-              <ProductCard product={{ ...p, price: Math.round(p.price * 0.8), originalPrice: p.price }} onAdd={() => { add(p); toast.success(`${p.name} added to cart`); }} />
+            <div key={`flash-${p.id}`} className="min-w-[150px] max-w-[170px] shrink-0 relative">
+              <div className="absolute top-2 right-2 z-10 bg-red-500 text-white text-[11px] font-bold px-2 py-1 rounded-full shadow-sm border border-white/20">-20%</div>
+              <ProductCard product={{ ...p, price: Math.round(p.price * 0.8), originalPrice: p.price }} onAdd={() => add(p)} />
             </div>
           ))}
         </div>
@@ -129,13 +133,10 @@ export default function HomePage() {
         <h2 className="text-[15px] font-semibold text-[#0C231D]">Popular around Activities</h2>
         <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 -mx-4 px-4">
           {products.slice(0, 4).map((p) => (
-            <div key={p.id} className="min-w-[170px] shrink-0">
+            <div key={p.id} className="min-w-[150px] max-w-[170px] shrink-0">
               <ProductCard
                 product={p}
-                onAdd={() => {
-                  add(p);
-                  toast.success(`${p.name} added to cart`);
-                }}
+                onAdd={() => add(p)}
               />
             </div>
           ))}
@@ -154,8 +155,8 @@ export default function HomePage() {
         </div>
         <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 -mx-4 px-4">
           {[...products].sort((a,b)=>b.rating-a.rating).slice(0,4).map((p) => (
-            <div key={`fav-${p.id}`} className="min-w-[170px] shrink-0">
-              <ProductCard product={p} onAdd={() => { add(p); toast.success(`${p.name} added`); }} />
+            <div key={`fav-${p.id}`} className="min-w-[150px] max-w-[170px] shrink-0">
+              <ProductCard product={p} onAdd={() => add(p)} />
             </div>
           ))}
         </div>
@@ -178,13 +179,10 @@ export default function HomePage() {
         <h2 className="text-[15px] font-semibold text-[#0C231D]">Under ₦2,000</h2>
         <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 -mx-4 px-4">
           {products.filter((p) => p.price < 2000).map((p) => (
-            <div key={p.id} className="min-w-[170px] shrink-0">
+            <div key={p.id} className="min-w-[150px] max-w-[170px] shrink-0">
               <ProductCard
                 product={p}
-                onAdd={() => {
-                  add(p);
-                  toast.success(`${p.name} added`);
-                }}
+                onAdd={() => add(p)}
               />
             </div>
           ))}
@@ -222,9 +220,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Second Promo - New around Activities */}
-      <div className="rounded-3xl bg-[#F9FAFB] border border-[#E5E7EB] p-6 flex gap-4 overflow-hidden">
-        <div className="flex-1 space-y-2">
+      {/* Second Promo - New around Activities - landscape */}
+      <div className="rounded-3xl bg-[#F9FAFB] border border-[#E5E7EB] p-5 sm:p-6 flex gap-4 overflow-hidden items-center">
+        <div className="flex-1 space-y-2 min-w-0">
           <div className="inline-flex items-center gap-1.5 bg-[#1EB95E]/10 text-[#1B9A4D] text-xs font-bold px-2.5 py-1 rounded-full border border-[#1EB95E]/20">
             <Star className="w-3 h-3 fill-white" /> New
           </div>
@@ -234,7 +232,7 @@ export default function HomePage() {
             Explore now <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=300&h=280&fit=crop" alt="campus" className="w-32 h-32 rounded-2xl object-cover shrink-0 border border-[#E5E7EB]" />
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=360&fit=crop" alt="campus" loading="lazy" className="w-36 h-24 sm:w-40 sm:h-24 md:w-48 md:h-28 rounded-2xl object-cover shrink-0 max-w-[45%] aspect-[16/10] border border-[#E5E7EB]" />
       </div>
 
       <div className="h-6" />

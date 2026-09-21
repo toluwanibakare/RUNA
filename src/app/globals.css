@@ -74,6 +74,15 @@ body {
   display: none;
 }
 
+/* responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+img[loading="lazy"] {
+  content-visibility: auto;
+}
+
 /* skeleton shimmer */
 @keyframes shimmer {
   0% {

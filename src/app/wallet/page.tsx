@@ -16,11 +16,11 @@ export default function WalletPage() {
         <div className="flex items-center justify-between">
           <p className="text-xs text-white/60 tracking-wide uppercase">Balance</p>
           <button
-            aria-label={showBalance ? "Hide balance" : "Show balance"}
+            aria-label={showBalance ? "Show balance" : "Hide balance"}
             onClick={() => setShowBalance((v) => !v)}
-            className="w-8 h-8 rounded-full bg-white/10 border border-white/15 grid place-items-center hover:bg-white/15 active:scale-95 transition"
+            className="w-9 h-9 rounded-full bg-white/10 border border-white/20 grid place-items-center hover:bg-white/20 active:scale-90 transition backdrop-blur shadow-sm"
           >
-            {showBalance ? <EyeOff className="w-4 h-4 text-white/80" /> : <Eye className="w-4 h-4 text-white/80" />}
+            {showBalance ? <Eye className="w-5 h-5 text-white" /> : <EyeOff className="w-5 h-5 text-white/70" />}
           </button>
         </div>
         <p className="text-3xl font-bold tracking-tight">{showBalance ? `${formatPrice(balance)}.00` : "••••••"}</p>
@@ -38,7 +38,6 @@ export default function WalletPage() {
             <ArrowUpRight className="w-4 h-4" /> Send
           </button>
         </div>
-        <p className="text-xs text-white/60">Secure wallet - instant checkout trusted at LASUSTECH</p>
       </div>
 
       <div className="bg-white border border-[#E5E7EB] rounded-2xl overflow-hidden">

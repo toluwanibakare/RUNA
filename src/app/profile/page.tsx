@@ -1,10 +1,9 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { VerificationBadge } from "@/components/ui/Badge";
 import { BackButton } from "@/components/ui/BackButton";
-import { ChevronRight, User, Package, Wallet, MapPin, BadgeCheck, Bike, Bell, HelpCircle, Settings, LogOut, Info, ExternalLink } from "lucide-react";
+import { ChevronRight, User, Package, Wallet, MapPin, BadgeCheck, Bike, HelpCircle, Settings, LogOut, Info, ExternalLink, Bug } from "lucide-react";
 
 export default function ProfilePage() {
   const verified = false;
@@ -31,7 +30,7 @@ export default function ProfilePage() {
           { icon: MapPin, label: "Addresses", href: "/profile" },
           { icon: BadgeCheck, label: "Student verification", href: "/verify", badge: !verified ? "Not Verified" : "Verified" },
           { icon: Bike, label: "Become a Runner", href: "/runner", badge: !verified ? "Requires verification" : "Apply" },
-          { icon: Bell, label: "Notifications", href: "/notifications" },
+          { icon: Bug, label: "Report a bug", href: "/report-bug" },
           { icon: HelpCircle, label: "Help & support", href: "/profile" },
           { icon: Settings, label: "Settings", href: "/profile" },
         ].map((item) => (
@@ -44,8 +43,7 @@ export default function ProfilePage() {
         ))}
         <button
           onClick={() => {
-            toast.success("Logged out - demo session ended");
-            setTimeout(() => router.push("/login"), 500);
+            router.push("/login");
           }}
           className="w-full flex items-center gap-3 px-4 h-12 text-red-600 hover:bg-red-50 active:bg-red-50 transition"
         >
@@ -54,41 +52,31 @@ export default function ProfilePage() {
         </button>
       </div>
 
-      {/* About RUNA */}
-      <div className="bg-white border border-[#E5E7EB] rounded-2xl p-5 space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-[#0C231D] text-white grid place-items-center">
-            <Info className="w-4 h-4" />
-          </div>
-          <h2 className="text-sm font-bold text-[#0C231D]">About RUNA</h2>
+      {/* About - link to detailed page */}
+      <Link href="/about" className="bg-white border border-[#E5E7EB] rounded-2xl p-4 flex items-center gap-3 hover:border-[#1EB95E]/20 hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition">
+        <div className="w-10 h-10 rounded-xl bg-[#0C231D] text-white grid place-items-center shrink-0">
+          <Info className="w-5 h-5" />
         </div>
-        <p className="text-sm text-[#6B7280] leading-relaxed">
-          RUNA is a campus marketplace for LASUSTECH - food, groceries, printing and campus services with student-powered delivery. Browse stores, order, pay from wallet, and track with runners. Works on campus even when internet is patchy via Activities Local Network.
-        </p>
-        <div className="grid grid-cols-2 gap-2 pt-1">
-          <div className="bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl p-3">
-            <p className="text-xs font-bold text-[#0C231D]">PWA first</p>
-            <p className="text-xs text-[#6B7280]">Installable, fast, offline-ready</p>
-          </div>
-          <div className="bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl p-3">
-            <p className="text-xs font-bold text-[#0C231D]">Student powered</p>
-            <p className="text-xs text-[#6B7280]">Verified runners earn on campus</p>
-          </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-bold text-[#0C231D]">About RUNA</p>
+          <p className="text-xs text-[#6B7280]">Learn about the app, version and credits</p>
         </div>
-        <p className="text-xs text-[#6B7280]">Version 1.0 - LASUSTECH pilot - Built for scale across Nigerian campuses.</p>
-      </div>
+        <ChevronRight className="w-4 h-4 text-[#6B7280]" />
+      </Link>
 
-      {/* Built by TMB */}
-      <div className="flex items-center justify-center gap-2 py-4 text-xs text-[#6B7280]">
-        <span>Built by TMB</span>
+      {/* Version + Built by */}
+      <div className="flex flex-col items-center gap-2 py-2">
+        <span className="text-xs inline-flex items-center gap-2 bg-white border border-[#E5E7EB] px-3 py-1 rounded-full">
+          <span className="text-[#6B7280]">Version</span> <span className="font-bold text-[#0C231D]">0.0.1</span>
+        </span>
         <a
           href="https://www.tmb.it.com"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Visit TMB website"
-          className="inline-flex items-center gap-1 text-[#0C231D] font-semibold hover:text-[#1EB95E] transition"
+          className="inline-flex items-center gap-1 text-xs text-[#6B7280] hover:text-[#0C231D] transition"
         >
-          www.tmb.it.com <ExternalLink className="w-3 h-3" />
+          Built by TMB <ExternalLink className="w-3 h-3" />
         </a>
       </div>
     </div>

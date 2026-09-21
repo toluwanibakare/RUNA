@@ -18,10 +18,10 @@ export function Header() {
           </Link>
         </div>
 
-        {/* Center: logo - larger */}
-        <Link href="/" className="absolute left-1/2 -translate-x-1/2 flex items-center" aria-label="RUNA home">
+        {/* Center: logo */}
+        <Link href="/" className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center" aria-label="RUNA home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="RUNA" className="h-12 md:h-14 w-auto object-contain" />
+          <img src="/logo.png" alt="RUNA" className="h-8 sm:h-9 w-auto object-contain max-h-10" />
         </Link>
 
         {/* Right: cart + notifications (notifications extreme right) */}
