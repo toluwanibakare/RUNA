@@ -189,6 +189,28 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Printing & Stationery */}
+      <section className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-[15px] font-bold text-[#0C231D] flex items-center gap-1.5">
+            <PenTool className="w-4 h-4 text-[#1EB95E]" /> Printing &amp; Stationery
+          </h2>
+          <Link href="/explore" className="text-xs font-semibold text-[#1EB95E]">
+            View all
+          </Link>
+        </div>
+        <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 -mx-4 px-4">
+          {products.filter((p) => p.category === "Printing" || p.category === "Stationery").map((p) => (
+            <div key={`stat-${p.id}`} className="min-w-[150px] max-w-[170px] shrink-0">
+              <ProductCard
+                product={p}
+                onAdd={() => add(p)}
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Services */}
       <section className="space-y-3">
         <div className="flex items-center justify-between">

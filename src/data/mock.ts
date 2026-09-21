@@ -195,7 +195,7 @@ export const products: Product[] = [
     price: 12500,
     rating: 5.0,
     eta: "10 min",
-    image: "https://images.unsplash.com/photo-1611125832047-1d7ad1e8e48d?w=500&auto=format&fit=crop",
+    image: "/images/calculator.jpg",
     category: "Stationery",
     isPopular: true,
   },
@@ -220,8 +220,9 @@ export const products: Product[] = [
     price: 800,
     rating: 4.6,
     eta: "5 min",
-    image: "https://images.unsplash.com/photo-1585336261026-8f5786372969?w=500&auto=format&fit=crop",
+    image: "/images/pens.jpg",
     category: "Stationery",
+    isPopular: true,
   },
 ];
 
