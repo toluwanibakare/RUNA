@@ -1,0 +1,68 @@
+# RUNA — private / generated — do not commit
+
+# PRD & prompt (privacy)
+RUNA_Technical_PRD.pdf
+*.pdf
+prompt.txt
+*prompt*
+*prmpt*
+*prd*
+*PRD*
+
+# agent research — local only
+agents/
+research/
+docs/research/
+.agents/
+agents-research.md
+AGENTS.local.md
+
+# Next.js / Node
+node_modules/
+.pnp/
+.pnp.js
+.next/
+out/
+dist/
+build/
+coverage/
+.nyc_output/
+*.tsbuildinfo
+.eslintcache
+.turbo/
+.vercel/
+.next/cache/
+
+# Env
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.production.local
+
+# Lockfile - keep pnpm-lock.yaml, ignore npm's if using pnpm (both present for now - keep both)
+# pnpm-lock.yaml is primary; package-lock.json kept for npm fallback
+pnpm-workspace.yaml
+
+# Prisma
+prisma/migrations/
+
+# IDE / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs/
+
+# Opencode runtime (keep skill, ignore its cache)
+.opencode/node_modules/
+.opencode/.cache/
